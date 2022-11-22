@@ -31,7 +31,6 @@ modules:
       buildpack: nodejs_buildpack
     requires:
       - name: testcicdcap-db
-
 resources:
   - name: testcicdcap-db
     type: com.sap.xs.hdi-container
