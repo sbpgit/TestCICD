@@ -73,7 +73,7 @@ steps:
     mtaDeployParameters: "-f --version-rule ALL"
 
   tmsUpload:
-    nodeName: "qa"
+    nodeName: "SBP_TEST"
     credentialId: "tmskey"
   #  cfTargets:
   #    - org: 'myOrg'
