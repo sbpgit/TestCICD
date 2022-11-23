@@ -60,6 +60,9 @@ stages:
     tmsUpload: true
   
 steps:
+  mtaBuild:    
+    buildTarget: 'CF'
+    
   artifactPrepareVersion:
     versioningType: "cloud_notag"
 
