@@ -1,5 +1,3 @@
-
-
 ###
 # This file configures the project "Piper" pipeline of your project.
 # For a reference of the configuration concept and available options, please have a look into its documentation.
@@ -14,31 +12,70 @@
 
 ### General project setup
 general:
-  inferBuildTool: true
+  buildTool: 'mta'
 
 ### Step-specific configuration
-steps:
-  mavenExecute:
-    dockerImage: devxci/mbtci:1.0.14
+# steps:
+#   mtaBuild:
+#     platform: 'CF'
+#   cloudFoundryDeploy:
+#     deployTool: 'mtaDeployPlugin'
+#     deployType: 'standard'
+#     cloudFoundry:
+#       apiEndpoint: 'https://api.cf.us10.hana.ondemand.com'
+#       org: 'SBPBTP_vcpprovider-sc0jeojq'
+#       space: 'dev'
+#       cfCredentialsId: 'sbpdev'
+# steps:
+#   mavenExecute:
+#     dockerImage: devxci/mbtci:1.0.14
 
-  artifactPrepareVersion:
-    versioningType: cloud_noTag
+  # artifactPrepareVersion:
+  #   versioningType: cloud_noTag
 
 ### Stage-specific configuration
 stages:
-  'Confirm':
-    manualConfirmation: false
+  # 'Confirm':
+  #   manualConfirmation: false
+  Build:
+    mavenExecuteStaticCodeChecks: false
+    npmExecuteLint: true
+  
+  Additional Unit Test:
+    npmExecuteScripts: false
+    karmaExecuteTests: false
 
 #  Integration:
 #    credentials:
 #      - alias: 'mySystemAlias'
 #        credentialId: 'mySystemCredentialsId'
 
-#  Release:
-#    cfTargets:
-#      - org: 'myOrg'
-#        space: 'mySpace'
-#        apiEndpoint: 'https://'
-#        appName: 'myAppName'
-#        manifest: 'manifest.yml'
-#        credentialsId: 'myDeploymentCredentialsId'
+  Release:
+    cloudFoundryDeploy: true
+    cfApiEndpoint: "https://api.cf.us10.hana.ondemand.com"
+    cfOrg: "SBPBTP_vcpprovider-sc0jeojq"
+    cfSpace: "dev"
+    cfAppname: "testcicdcap"
+    cfCredentialsId: 'sbpdev'
+    tmsUpload: true
+  
+steps:
+  artifactPrepareVersion:
+    versioningType: "cloud_notag"
+
+  npmExecuteLint:
+    failonError:  true
+
+  cloudFoundryDeploy:
+    mtaDeployParameters: "-f --version-rule ALL"
+
+  tmsUpload:
+    nodeName: "qa"
+    credentialId: "tmskey"
+  #  cfTargets:
+  #    - org: 'myOrg'
+  #      space: 'mySpace'
+  #      apiEndpoint: 'https://'
+  #      appName: 'myAppName'
+  #      manifest: 'manifest.yml'
+  #      credentialsId: 'myDeploymentCredentialsId'
