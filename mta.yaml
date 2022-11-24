@@ -17,6 +17,8 @@ modules:
     path: gen/srv
     parameters:
       buildpack: nodejs_buildpack
+      disk-quota: 256M
+      memory: 256M
     build-parameters:
       builder: npm-ci
     provides:
@@ -24,13 +26,15 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: testcicdcap-db
+      - name: testcicdcap-db    
 
   - name: testcicdcap-db-deployer
     type: hdb
     path: gen/db
     parameters:
       buildpack: nodejs_buildpack
+      disk-quota: 256M
+      memory: 256M
     requires:
       - name: testcicdcap-db
 resources:
