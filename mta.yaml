@@ -33,8 +33,6 @@ modules:
     path: gen/db
     parameters:
       buildpack: nodejs_buildpack
-      # disk-quota: 1024M
-      # memory: 1024M
     requires:
       - name: testcicdcap-db
 resources:
